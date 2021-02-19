@@ -84,49 +84,21 @@ void UDTPGAInputReagent::ShiftActiveReagentQueue(int ReagentNumber)
 void UDTPGAInputReagent::ShiftReagentAttributeDuo(float PreviousReagentValue, FGameplayAttribute NextReagentAttribute)
 {
 	// Create the effect
-	// UGameplayEffect* GEShiftReagentAttribute = NewObject<UGameplayEffect>(GetTransientPackage(),
-	// 	FName(TEXT("ReagentShift")));
-	// GEShiftReagentAttribute->DurationPolicy = EGameplayEffectDurationType::Instant;
-	// int32 Idx = GEShiftReagentAttribute->Modifiers.Num();
-	// GEShiftReagentAttribute->Modifiers.SetNum(Idx + 1);
-	// GEShiftReagentAttribute->StackingType = EGameplayEffectStackingType::None;
-	//
-	// FGameplayModifierInfo& InfoNextReagent = GEShiftReagentAttribute->Modifiers[Idx];
-	// InfoNextReagent.ModifierMagnitude = FScalableFloat(PreviousReagentValue);
-	// InfoNextReagent.ModifierOp = EGameplayModOp::Override;
-	// InfoNextReagent.Attribute = NextReagentAttribute;
-	//
-	// FGameplayEffectSpec* GESpec = new FGameplayEffectSpec(GEShiftReagentAttribute, {}, 1.0f);
-	// ApplyGameplayEffectSpecToOwner(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(),
-	// 	GESpec);
-
-	FGameplayEffectSpecHandle SpecHandle = MakeOutgoingGameplayEffectSpec(GE_OverrideReagent, 1.0f);
-	// if (!SpecHandle.IsValid())
-	// {
-	// 	UE_LOG(LogTemp, Warning, TEXT("No Spec Handle @UDTPGAInputReagent::ShiftReagentAttributeDuo"));
-	// 	return;
-	// }
-
-	if (SpecHandle.Data.Get() == nullptr)
-	{
-		return;
-	}
-
-	if (SpecHandle.Data.Get()->Def == nullptr)
-	{
-		return;
-	}
+	UGameplayEffect* GEShiftReagentAttribute = NewObject<UGameplayEffect>(GetTransientPackage(),
+		FName(TEXT("ReagentShift")));
+	GEShiftReagentAttribute->DurationPolicy = EGameplayEffectDurationType::Instant;
+	int32 Idx = GEShiftReagentAttribute->Modifiers.Num();
+	GEShiftReagentAttribute->Modifiers.SetNum(Idx + 1);
+	GEShiftReagentAttribute->StackingType = EGameplayEffectStackingType::None;
 	
-	if (SpecHandle.Data.Get() != nullptr)
-	{
-		if (SpecHandle.Data.Get()->Def->Modifiers.IsValidIndex(0))
-		{
-			auto x = SpecHandle.Data.Get()->AddModifiedAttribute(NextReagentAttribute);
-			x->TotalMagnitude = PreviousReagentValue;
-			ApplyGameplayEffectSpecToOwner(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(),
-				GetCurrentActivationInfo(), SpecHandle);
-		}
-	}
+	FGameplayModifierInfo& InfoNextReagent = GEShiftReagentAttribute->Modifiers[Idx];
+	InfoNextReagent.ModifierMagnitude = FScalableFloat(PreviousReagentValue);
+	InfoNextReagent.ModifierOp = EGameplayModOp::Override;
+	InfoNextReagent.Attribute = NextReagentAttribute;
+	
+	FGameplayEffectSpec* GESpec = new FGameplayEffectSpec(GEShiftReagentAttribute, {}, 1.0f);
+	ApplyGameplayEffectSpecToOwner(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(),
+		GESpec);
 }
 
 
