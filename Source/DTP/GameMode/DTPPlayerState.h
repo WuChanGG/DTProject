@@ -25,4 +25,6 @@ public:
 	UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	class UDTPAttributeSetInvoker* AttributeSet;
+
+	void Tick(float DeltaSeconds) override;
 };

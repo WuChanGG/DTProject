@@ -6,6 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "ASC/AttributeSets/DTPAttributeSetInvoker.h"
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 UDTPGAInputReagent::UDTPGAInputReagent()
 {
@@ -79,6 +80,17 @@ void UDTPGAInputReagent::ShiftActiveReagentQueue(int ReagentNumber)
 	ShiftReagentAttributeDuo(static_cast<float>(ReagentNumber), FirstReagentAttribute);
 	ShiftReagentAttributeDuo(FirstReagent, SecondReagentAttribute);
 	ShiftReagentAttributeDuo(SecondReagent, ThirdReagentAttribute);
+
+	UKismetSystemLibrary::PrintString(this, FString("First reagent value: ") +
+		FString::FromInt(static_cast<int>(GetAbilitySystemComponentFromActorInfo()->
+		GetNumericAttribute(FirstReagentAttribute))));
+	UKismetSystemLibrary::PrintString(this, FString("Second reagent value: ") +
+		FString::FromInt(static_cast<int>(GetAbilitySystemComponentFromActorInfo()->
+		GetNumericAttribute(SecondReagentAttribute))));
+	UKismetSystemLibrary::PrintString(this, FString("Third reagent value: ") +
+		FString::FromInt(static_cast<int>(GetAbilitySystemComponentFromActorInfo()->
+		GetNumericAttribute(ThirdReagentAttribute))));
+	
 }
 
 void UDTPGAInputReagent::ShiftReagentAttributeDuo(float PreviousReagentValue, FGameplayAttribute NextReagentAttribute)
@@ -87,18 +99,19 @@ void UDTPGAInputReagent::ShiftReagentAttributeDuo(float PreviousReagentValue, FG
 	UGameplayEffect* GEShiftReagentAttribute = NewObject<UGameplayEffect>(GetTransientPackage(),
 		FName(TEXT("ReagentShift")));
 	GEShiftReagentAttribute->DurationPolicy = EGameplayEffectDurationType::Instant;
+	
 	int32 Idx = GEShiftReagentAttribute->Modifiers.Num();
 	GEShiftReagentAttribute->Modifiers.SetNum(Idx + 1);
-	GEShiftReagentAttribute->StackingType = EGameplayEffectStackingType::None;
 	
 	FGameplayModifierInfo& InfoNextReagent = GEShiftReagentAttribute->Modifiers[Idx];
+	// InfoNextReagent.Attribute.SetUProperty(NextReagentAttribute.GetUProperty());
+	InfoNextReagent.Attribute = NextReagentAttribute;
 	InfoNextReagent.ModifierMagnitude = FScalableFloat(PreviousReagentValue);
 	InfoNextReagent.ModifierOp = EGameplayModOp::Override;
-	InfoNextReagent.Attribute = NextReagentAttribute;
 	
 	FGameplayEffectSpec* GESpec = new FGameplayEffectSpec(GEShiftReagentAttribute, {}, 1.0f);
 	ApplyGameplayEffectSpecToOwner(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(),
-		GESpec);
+		FGameplayEffectSpecHandle(GESpec));
 }
 
 

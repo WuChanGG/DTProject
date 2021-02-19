@@ -3,6 +3,7 @@
 
 #include "DTP/GameMode/DTPPlayerState.h"
 #include "ASC/AttributeSets/DTPAttributeSetInvoker.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 ADTPPlayerState::ADTPPlayerState()
 {
@@ -18,4 +19,9 @@ ADTPPlayerState::ADTPPlayerState()
 UAbilitySystemComponent* ADTPPlayerState::GetAbilitySystemComponent() const
 {
 	return ASC;
+}
+
+void ADTPPlayerState::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
 }
