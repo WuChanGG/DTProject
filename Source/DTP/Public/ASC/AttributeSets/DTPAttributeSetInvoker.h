@@ -59,5 +59,40 @@ public:
 	UFUNCTION()
 	void OnRep_ThirdReagent(const FGameplayAttributeData& OldReagent);
 
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_HealthRegen)
+	FGameplayAttributeData HealthRegen;
+	ATTRIBUTE_ACCESSORS(UDTPAttributeSetInvoker, HealthRegen);
+	
+	UFUNCTION()
+	void OnRep_HealthRegen(const FGameplayAttributeData& OldHealthRegen);
+
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_Health)
+	FGameplayAttributeData Health;
+	ATTRIBUTE_ACCESSORS(UDTPAttributeSetInvoker, Health);
+	
+	UFUNCTION()
+	void OnRep_Health(const FGameplayAttributeData& OldHealth);
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Reagents", ReplicatedUsing = OnRep_QuaxReagentLevel)
+	FGameplayAttributeData QuaxReagentLevel;
+	ATTRIBUTE_ACCESSORS(UDTPAttributeSetInvoker, QuaxReagentLevel);
+	
+	UFUNCTION()
+	void OnRep_QuaxReagentLevel(const FGameplayAttributeData& OldLevel);
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Reagents", ReplicatedUsing = OnRep_WexReagentLevel)
+	FGameplayAttributeData WexReagentLevel;
+	ATTRIBUTE_ACCESSORS(UDTPAttributeSetInvoker, WexReagentLevel);
+	
+	UFUNCTION()
+	void OnRep_WexReagentLevel(const FGameplayAttributeData& OldLevel);
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Reagents", ReplicatedUsing = OnRep_ExortReagentLevel)
+	FGameplayAttributeData ExortReagentLevel;
+	ATTRIBUTE_ACCESSORS(UDTPAttributeSetInvoker, ExortReagentLevel);
+	
+	UFUNCTION()
+	void OnRep_ExortReagentLevel(const FGameplayAttributeData& OldLevel);
+	
 	int ValueOfEmptyReagentSlot = -1;
 };

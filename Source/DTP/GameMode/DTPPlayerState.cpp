@@ -25,3 +25,8 @@ void ADTPPlayerState::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 }
+
+void ADTPPlayerState::BeginPlay()
+{
+	Super::BeginPlay();
+}

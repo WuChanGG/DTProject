@@ -48885,6 +48885,7 @@
       <e p="UE4Game.Target.cs" t="Include" />
     </e>
     <e p="Z:\DTP\DTP" t="IncludeFlat">
+      <e p=".gitignore" t="Include" />
       <e p="Config" t="Include">
         <e p="DefaultEditor.ini" t="Include" />
         <e p="DefaultEditorPerProjectUserSettings.ini" t="Include" />
@@ -48923,6 +48924,9 @@
               <e p="Abilities" t="Include">
                 <e p="DTPGABase.cpp" t="Include" />
                 <e p="DTPGAInputReagent.cpp" t="Include" />
+                <e p="Invoker" t="Include">
+                  <e p="DTPGAInvokerInvoke.cpp" t="Include" />
+                </e>
               </e>
               <e p="AttributeSets" t="Include">
                 <e p="DTPAttributeSetInvoker.cpp" t="Include" />
@@ -48931,12 +48935,16 @@
             <e p="Characters" t="Include">
               <e p="DTPCharacterInvoker.cpp" t="Include" />
             </e>
+            <e p="DTPEngineSubsystem.cpp" t="Include" />
           </e>
           <e p="Public" t="Include">
             <e p="ASC" t="Include">
               <e p="Abilities" t="Include">
                 <e p="DTPGABase.h" t="Include" />
                 <e p="DTPGAInputReagent.h" t="Include" />
+                <e p="Invoker" t="Include">
+                  <e p="DTPGAInvokerInvoke.h" t="Include" />
+                </e>
               </e>
               <e p="AttributeSets" t="Include">
                 <e p="DTPAttributeSetInvoker.h" t="Include" />
@@ -48945,6 +48953,7 @@
             <e p="Characters" t="Include">
               <e p="DTPCharacterInvoker.h" t="Include" />
             </e>
+            <e p="DTPEngineSubsystem.h" t="Include" />
           </e>
         </e>
         <e p="DTP.Target.cs" t="Include" />

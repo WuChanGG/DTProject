@@ -40,5 +40,36 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UGameplayEffect> GE_OverrideReagent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TMap<FName, TSubclassOf<UGameplayEffect>> GE_ReagentOverrideList;
+
+	void ShiftReagentQueueII(int ReagentNumber);
+
+	void ApplyEffectBasedOnAttributeAndValue(int ReagentNumber, float NewValue);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_FirstToWex;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_FirstToQuax;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_FirstToExort;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_SecondToWex;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_SecondToQuax;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_SecondToExort;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_ThirdToWex;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_ThirdToQuax;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_ThirdToExort;
+
+	UFUNCTION(Server, Reliable)
+	void PrintInfo();
 };
 
