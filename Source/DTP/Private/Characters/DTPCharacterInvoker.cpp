@@ -49,10 +49,8 @@ void ADTPCharacterInvoker::PossessedBy(AController* NewController)
 		PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS, this);
 		InitializeAttributes();
 		GiveAbilityListToCharacter();
-		DebugMember();
-		
+		BindReagentAttributeChangeDelegates();
 	}
-
 }
 
 UAbilitySystemComponent* ADTPCharacterInvoker::GetAbilitySystemComponent() const
@@ -172,12 +170,12 @@ void ADTPCharacterInvoker::Tick(float DeltaSeconds)
 	// 	TickTime = GetWorld()->GetTimeSeconds();
 	// }
 
-	if (GetWorld()->GetTimeSeconds() > 20.0f && !bDebugBool)
-	{
-		ASC->RemoveActiveGameplayEffect(QuaxRegenHandle, 1);
-		UKismetSystemLibrary::PrintString(this, FString("Revomed quax effect"));
-		bDebugBool = true;
-	}
+	// if (GetWorld()->GetTimeSeconds() > 20.0f && !bDebugBool)
+	// {
+	// 	ASC->RemoveActiveGameplayEffect(QuaxRegenHandle, 1);
+	// 	UKismetSystemLibrary::PrintString(this, FString("Revomed quax effect"));
+	// 	bDebugBool = true;
+	// }
 }
 
 void ADTPCharacterInvoker::BindReagentAttributeChangeDelegates()
@@ -221,21 +219,15 @@ void ADTPCharacterInvoker::FirstReagentAttributeChanged(const FOnAttributeChange
 
 	// Now remove all of the effects caused by the DROPPED third reagent
 	RemoveDroppedThirdReagentEffects(TempThirdReagentInfo);
-	
-}
-
-void ADTPCharacterInvoker::ReactToReagentAttributeChange(float OldValue, float NewValue)
-{
-	
 }
 
 void ADTPCharacterInvoker::DebugMember()
 {
-	check(GE_QuaxHealthRegen);
-	check(ASC);
-	FGameplayEffectSpecHandle Spec = ASC->MakeOutgoingSpec(GE_QuaxHealthRegen, 1.0,
-		ASC->MakeEffectContext());
-	QuaxRegenHandle = ASC->ApplyGameplayEffectSpecToSelf(*Spec.Data.Get());
+	// check(GE_QuaxHealthRegen);
+	// check(ASC);
+	// FGameplayEffectSpecHandle Spec = ASC->MakeOutgoingSpec(GE_QuaxHealthRegen, 1.0,
+	// 	ASC->MakeEffectContext());
+	// QuaxRegenHandle = ASC->ApplyGameplayEffectSpecToSelf(*Spec.Data.Get());
 }
 
 void ADTPCharacterInvoker::RemoveDroppedThirdReagentEffects(FActiveReagentEffectInfo DroppedReagentInfo)
@@ -272,8 +264,31 @@ void ADTPCharacterInvoker::ReagentChangedToQuax()
 
 void ADTPCharacterInvoker::ReagentChangedToWex()
 {
+	check(GE_PassiveWexBonus);
+	float WexReagentLevel = ASC->GetNumericAttribute(UDTPAttributeSetInvoker::GetWexReagentLevelAttribute());
+	FGameplayEffectSpecHandle SpecHandle = ASC->MakeOutgoingSpec(GE_PassiveWexBonus, WexReagentLevel,
+		ASC->MakeEffectContext());
+
+	FActiveGameplayEffectHandle ActiveHandle = ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+
+	// Change active effect info
+	FirstReagentActiveEffectInfo.Reagent = InvokerReagents::Wex;
+	FirstReagentActiveEffectInfo.ActiveEffects.Empty();
+	FirstReagentActiveEffectInfo.ActiveEffects.Add(ActiveHandle);
 }
 
 void ADTPCharacterInvoker::ReagentChangedToExort()
 {
+	check(GE_PassiveExortBonus);
+
+	float ExortReagentLevel = ASC->GetNumericAttribute(UDTPAttributeSetInvoker::GetExortReagentLevelAttribute());
+
+	FGameplayEffectSpecHandle SpecHandle = ASC->MakeOutgoingSpec(GE_PassiveExortBonus, ExortReagentLevel,
+		ASC->MakeEffectContext());
+
+	FActiveGameplayEffectHandle ActiveHandle = ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+
+	FirstReagentActiveEffectInfo.Reagent = InvokerReagents::Exort;
+	FirstReagentActiveEffectInfo.ActiveEffects.Empty();
+	FirstReagentActiveEffectInfo.ActiveEffects.Add(ActiveHandle);
 }

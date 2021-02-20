@@ -94,5 +94,40 @@ public:
 	UFUNCTION()
 	void OnRep_ExortReagentLevel(const FGameplayAttributeData& OldLevel);
 	
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_AttackSpeed)
+	FGameplayAttributeData AttackSpeed;
+	ATTRIBUTE_ACCESSORS(UDTPAttributeSetInvoker, AttackSpeed);
+	
+	UFUNCTION()
+	void OnRep_AttackSpeed(const FGameplayAttributeData& OldAttackSpeed);
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_MovementSpeed)
+	FGameplayAttributeData MovementSpeed;
+	ATTRIBUTE_ACCESSORS(UDTPAttributeSetInvoker, MovementSpeed);
+	
+	UFUNCTION()
+	void OnRep_MovementSpeed(const FGameplayAttributeData& OldMovementSpeed);
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_AttackDamage)
+	FGameplayAttributeData AttackDamage;
+	ATTRIBUTE_ACCESSORS(UDTPAttributeSetInvoker, AttackDamage);
+	
+	UFUNCTION()
+	void OnRep_AttackDamage(const FGameplayAttributeData& OldAttackDamage);
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_MinAttackDamage)
+	FGameplayAttributeData MinAttackDamage;
+	ATTRIBUTE_ACCESSORS(UDTPAttributeSetInvoker, MinAttackDamage);
+	
+	UFUNCTION()
+	void OnRep_MinAttackDamage(const FGameplayAttributeData& OldAttackDamage);
+
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_MaxAttackDamage)
+	FGameplayAttributeData MaxAttackDamage;
+	ATTRIBUTE_ACCESSORS(UDTPAttributeSetInvoker, MaxAttackDamage);
+	
+	UFUNCTION()
+	void OnRep_MaxAttackDamage(const FGameplayAttributeData& OldAttackDamage);
+	
 	int ValueOfEmptyReagentSlot = -1;
 };

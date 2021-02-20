@@ -9,18 +9,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55468941-d77d-4f2f-b48e-f8252c69fc20" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DTP/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DTP/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DTP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DTP/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/Abilities/GA_InvokerInputReagent.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/Abilities/GA_InvokerInputReagent.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/BP_CharacterInvoker.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/BP_CharacterInvoker.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/Effects/GE_InitiateInvokerAttributes.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/Effects/GE_InitiateInvokerAttributes.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/Effects/GE_OverrideReagent.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/Effects/GE_OverrideReagent.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/DTP/GameMode/DTPPlayerState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/GameMode/DTPPlayerState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/DTP/GameMode/DTPPlayerState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/GameMode/DTPPlayerState.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/DTP/Private/ASC/Abilities/DTPGAInputReagent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Private/ASC/Abilities/DTPGAInputReagent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/DTP/Private/ASC/AttributeSets/DTPAttributeSetInvoker.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Private/ASC/AttributeSets/DTPAttributeSetInvoker.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/DTP/Private/Characters/DTPCharacterInvoker.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Private/Characters/DTPCharacterInvoker.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/DTP/Public/ASC/Abilities/DTPGAInputReagent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Public/ASC/Abilities/DTPGAInputReagent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/DTP/Public/ASC/AttributeSets/DTPAttributeSetInvoker.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Public/ASC/AttributeSets/DTPAttributeSetInvoker.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/DTP/Public/Characters/DTPCharacterInvoker.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Public/Characters/DTPCharacterInvoker.h" afterDir="false" />
     </list>
@@ -69,7 +62,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="CppUnrealEngineOptionsId" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="ReaderModeSettings">
@@ -313,7 +306,10 @@
       <workItem from="1613680800853" duration="35000" />
       <workItem from="1613680984007" duration="17929000" />
       <workItem from="1613709667393" duration="3601000" />
-      <workItem from="1613751710599" duration="25757000" />
+      <workItem from="1613751710599" duration="26338000" />
+      <workItem from="1613840255058" duration="1341000" />
+      <workItem from="1613844395141" duration="115000" />
+      <workItem from="1613844611492" duration="4150000" />
     </task>
     <servers />
   </component>

@@ -98,8 +98,6 @@ public:
 	// the values of the third reagent are dropped
 	virtual void FirstReagentAttributeChanged(const FOnAttributeChangeData& Data);
 
-	virtual void ReactToReagentAttributeChange(float OldValue, float NewValue);
-
 	virtual void ReagentChangedToQuax();
 	virtual void ReagentChangedToWex();
 	virtual void ReagentChangedToExort();
@@ -118,4 +116,9 @@ public:
 	FActiveReagentEffectInfo ThirdReagentActiveEffectInfo;
 	
 	void RemoveDroppedThirdReagentEffects(FActiveReagentEffectInfo DroppedReagentInfo);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_PassiveWexBonus;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_PassiveExortBonus;
 };

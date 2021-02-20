@@ -21,6 +21,11 @@ void UDTPAttributeSetInvoker::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, QuaxReagentLevel, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, WexReagentLevel, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, ExortReagentLevel, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, AttackSpeed, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, MovementSpeed, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, AttackDamage, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, MinAttackDamage, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, MaxAttackDamage, COND_None, REPNOTIFY_Always);
 }
 
 void UDTPAttributeSetInvoker::OnRep_FirstReagent(const FGameplayAttributeData& OldReagent)
@@ -50,15 +55,40 @@ void UDTPAttributeSetInvoker::OnRep_Health(const FGameplayAttributeData& OldHeal
 
 void UDTPAttributeSetInvoker::OnRep_QuaxReagentLevel(const FGameplayAttributeData& OldLevel)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, Health, QuaxReagentLevel);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, QuaxReagentLevel, OldLevel);
 }
 
 void UDTPAttributeSetInvoker::OnRep_WexReagentLevel(const FGameplayAttributeData& OldLevel)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, Health, WexReagentLevel);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, WexReagentLevel, OldLevel);
 }
 
 void UDTPAttributeSetInvoker::OnRep_ExortReagentLevel(const FGameplayAttributeData& OldLevel)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, Health, ExortReagentLevel);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, ExortReagentLevel, OldLevel);
+}
+
+void UDTPAttributeSetInvoker::OnRep_AttackSpeed(const FGameplayAttributeData& OldAttackSpeed)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, AttackSpeed, OldAttackSpeed);
+}
+
+void UDTPAttributeSetInvoker::OnRep_MovementSpeed(const FGameplayAttributeData& OldMovementSpeed)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, MovementSpeed, OldMovementSpeed);
+}
+
+void UDTPAttributeSetInvoker::OnRep_AttackDamage(const FGameplayAttributeData& OldAttackDamage)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, AttackDamage, OldAttackDamage);
+}
+
+void UDTPAttributeSetInvoker::OnRep_MinAttackDamage(const FGameplayAttributeData& OldAttackDamage)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, MinAttackDamage, OldAttackDamage);
+}
+
+void UDTPAttributeSetInvoker::OnRep_MaxAttackDamage(const FGameplayAttributeData& OldAttackDamage)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, MaxAttackDamage, OldAttackDamage);
 }
