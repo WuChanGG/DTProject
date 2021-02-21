@@ -26,6 +26,7 @@ void UDTPAttributeSetInvoker::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, AttackDamage, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, MinAttackDamage, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, MaxAttackDamage, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UDTPAttributeSetInvoker, TurnRate, COND_None, REPNOTIFY_Always);
 }
 
 void UDTPAttributeSetInvoker::OnRep_FirstReagent(const FGameplayAttributeData& OldReagent)
@@ -91,4 +92,9 @@ void UDTPAttributeSetInvoker::OnRep_MinAttackDamage(const FGameplayAttributeData
 void UDTPAttributeSetInvoker::OnRep_MaxAttackDamage(const FGameplayAttributeData& OldAttackDamage)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, MaxAttackDamage, OldAttackDamage);
+}
+
+void UDTPAttributeSetInvoker::OnRep_TurnRate(const FGameplayAttributeData& OldTurnRate)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UDTPAttributeSetInvoker, TurnRate, OldTurnRate);
 }

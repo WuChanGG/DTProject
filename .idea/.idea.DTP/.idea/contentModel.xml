@@ -48925,12 +48925,14 @@
                 <e p="DTPGABase.cpp" t="Include" />
                 <e p="DTPGAInputReagent.cpp" t="Include" />
                 <e p="Invoker" t="Include">
+                  <e p="DTPGA_InvokerTornado.cpp" t="Include" />
                   <e p="DTPGAInvokerInvoke.cpp" t="Include" />
                 </e>
               </e>
               <e p="AttributeSets" t="Include">
                 <e p="DTPAttributeSetInvoker.cpp" t="Include" />
               </e>
+              <e p="DTPAT_TurnRate.cpp" t="Include" />
             </e>
             <e p="Characters" t="Include">
               <e p="DTPCharacterInvoker.cpp" t="Include" />
@@ -48943,12 +48945,14 @@
                 <e p="DTPGABase.h" t="Include" />
                 <e p="DTPGAInputReagent.h" t="Include" />
                 <e p="Invoker" t="Include">
+                  <e p="DTPGA_InvokerTornado.h" t="Include" />
                   <e p="DTPGAInvokerInvoke.h" t="Include" />
                 </e>
               </e>
               <e p="AttributeSets" t="Include">
                 <e p="DTPAttributeSetInvoker.h" t="Include" />
               </e>
+              <e p="DTPAT_TurnRate.h" t="Include" />
             </e>
             <e p="Characters" t="Include">
               <e p="DTPCharacterInvoker.h" t="Include" />

@@ -121,4 +121,16 @@ public:
 	TSubclassOf<UGameplayEffect> GE_PassiveWexBonus;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UGameplayEffect> GE_PassiveExortBonus;
+
+	// This ability is bound to the "D" keyboard key.
+	// This ability will be replaced whenever invoke is called, and it will be put in place of SecondSlotAbility
+	// If the gameplay ability Invoke is called and the ability that Invoke would grant is already equals to
+	// FirstSlotAbility, nothing happens
+	TSubclassOf<UGameplayAbility> FirstSlotAbility;
+	// This ability is bound to the "F" keyboard key by default
+	// This ability will be replaced by the current value of FirstSlotAbility whenever Invoke is called
+	// This ability will be sent to the FirstSlotAbility value, when it's the "second slot" and Invoke is called
+	// And the SecondSlotAbility is already the ability which Invoke invoked
+	// When the previous case happens, FirstSlotAbility and SecondSlotAbility only basically trade places
+	TSubclassOf<UGameplayAbility> SecondSlotAbility;
 };

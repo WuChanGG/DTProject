@@ -129,5 +129,12 @@ public:
 	UFUNCTION()
 	void OnRep_MaxAttackDamage(const FGameplayAttributeData& OldAttackDamage);
 	
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_TurnRate)
+	FGameplayAttributeData TurnRate;
+	ATTRIBUTE_ACCESSORS(UDTPAttributeSetInvoker, TurnRate);
+	
+	UFUNCTION()
+	void OnRep_TurnRate(const FGameplayAttributeData& OldTurnRate);
+	
 	int ValueOfEmptyReagentSlot = -1;
 };
