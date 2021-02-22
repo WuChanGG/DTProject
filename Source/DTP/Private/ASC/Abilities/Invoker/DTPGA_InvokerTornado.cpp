@@ -9,11 +9,17 @@ void UDTPGA_InvokerTornado::ActivateAbility(const FGameplayAbilitySpecHandle Han
                                             const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
                                             const FGameplayEventData* TriggerEventData)
 {
-	
 }
 
-void UDTPGA_InvokerTornado::CreateTornadoActor(FGameplayAbilityTargetDataHandle DataHandle)
+void UDTPGA_InvokerTornado::CreateTornadoActor(FGameplayTag EventTag, FGameplayAbilityTargetDataHandle DataHandle)
 {
+	if (GetOwningActorFromActorInfo()->GetLocalRole() != ROLE_Authority)
+	{
+		EndAbility(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(),
+			true, false);
+		return;
+	}
+	
 	check(TornadoProjectileActorClass)
 
 	// Get target data
@@ -46,4 +52,41 @@ void UDTPGA_InvokerTornado::CreateTornadoActor(FGameplayAbilityTargetDataHandle 
 	
 	GetWorld()->SpawnActor<AActor>(TornadoProjectileActorClass, ProjectileSpawnLocation, ProjectileSpawnRotation,
 		SpawnParameters);
+	
+	EndAbility(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(),
+		true, false);
+}
+
+void UDTPGA_InvokerTornado::CreateTurnRateTask(FGameplayAbilityTargetDataHandle DataHandle)
+{
+	// In order to realize any kind of ability we must first realize the TurnRate task successfully
+	TurnRateTask = UDTPAT_TurnRate::TurnRateTask(this, FName("TurnRateTask"),
+		FGameplayTagContainer(), DataHandle);
+
+	TurnRateTask->OnCompleted.AddDynamic(this, &UDTPGA_InvokerTornado::CreateTornadoActor);
+	TurnRateTask->EventReceived.AddDynamic(this, &UDTPGA_InvokerTornado::EventReceived);
+	TurnRateTask->OnCancelled.AddDynamic(this, &UDTPGA_InvokerTornado::OnCancelled);
+}
+
+void UDTPGA_InvokerTornado::EventReceived(FGameplayTag EventTag, FGameplayEventData EventData)
+{
+	if (EventTag == FGameplayTag::RequestGameplayTag(FName("Event.Ability.Cancel")))
+	{
+		EndAbility(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(),
+			true, true);
+	}
+}
+
+void UDTPGA_InvokerTornado::OnCancelled(FGameplayTag EventTag, FGameplayEventData EventData)
+{
+	EndAbility(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(),
+		true, true);
+}
+
+void UDTPGA_InvokerTornado::EndAbility(const FGameplayAbilitySpecHandle Handle,
+	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
+	bool bReplicateEndAbility, bool bWasCancelled)
+{
+	TurnRateTask->EndTask();
+	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }

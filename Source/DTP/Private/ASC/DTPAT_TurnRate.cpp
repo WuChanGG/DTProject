@@ -10,6 +10,7 @@
 
 UDTPAT_TurnRate::UDTPAT_TurnRate()
 {
+	bStopWhenAbilityEnds = true;
 }
 
 void UDTPAT_TurnRate::TickTask(float DeltaTime)
@@ -46,7 +47,7 @@ void UDTPAT_TurnRate::TickTask(float DeltaTime)
 	// If we are looking at the hit result location, broadcast OnCompleted
 	// In the case of the Invoker Tornado ability, when we are looking toward the hit result location, we spawn the
 	// tornado
-	if (FMath::IsNearlyEqual(DotProduct, 1.0f, 0.1f) && ShouldBroadcastAbilityTaskDelegates());
+	if (FMath::IsNearlyEqual(DotProduct, 1.0f, 0.1f) && ShouldBroadcastAbilityTaskDelegates())
 	{
 		OnCompleted.Broadcast(FGameplayTag(), DataHandle);
 		EndTask();
@@ -86,13 +87,22 @@ void UDTPAT_TurnRate::Activate()
 		return;
 	}
 
-	ASC->AddGameplayEventTagContainerDelegate(EventTags, FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(
+	EventHandle = ASC->AddGameplayEventTagContainerDelegate(EventTags, FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(
 		this, &UDTPAT_TurnRate::OnGameplayEvent));
+
+	CancelledHandle = Ability->OnGameplayAbilityCancelled.AddUObject(this, &UDTPAT_TurnRate::OnAbilityCancelled);
 	DataHitResultLocation = DataHitResult.Location;
 }
 
 void UDTPAT_TurnRate::ExternalCancel()
 {
+	check(Ability->GetAbilitySystemComponentFromActorInfo())
+
+	OnAbilityCancelled();
+
+	Super::ExternalCancel();
+
+	EndTask();
 }
 
 void UDTPAT_TurnRate::OnGameplayEvent(FGameplayTag EventTag, const FGameplayEventData* Payload)
@@ -105,3 +115,31 @@ void UDTPAT_TurnRate::OnGameplayEvent(FGameplayTag EventTag, const FGameplayEven
 		EventReceived.Broadcast(EventTag, TempData);
 	}
 }
+
+void UDTPAT_TurnRate::OnAbilityCancelled()
+{
+	if (ShouldBroadcastAbilityTaskDelegates())
+	{
+		OnCancelled.Broadcast(FGameplayTag(), FGameplayEventData());
+		EndTask();
+	}
+}
+
+void UDTPAT_TurnRate::OnDestroy(bool bInOwnerFinished)
+{
+	if (Ability != nullptr)
+	{
+		Ability->OnGameplayAbilityCancelled.Remove(CancelledHandle);
+	}
+
+	if (Ability != nullptr && Ability->GetAbilitySystemComponentFromActorInfo() != nullptr)
+	{
+		Ability->GetAbilitySystemComponentFromActorInfo()->RemoveGameplayEventTagContainerDelegate(EventTags,
+			EventHandle);
+	}
+
+	Super::OnDestroy(bInOwnerFinished);
+
+	EndTask();
+}
+

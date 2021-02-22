@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ASC/DTPAT_TurnRate.h"
 #include "ASC/Abilities/DTPGABase.h"
 #include "DTPGA_InvokerTornado.generated.h"
 
@@ -18,11 +19,23 @@ public:
 	void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
 		const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
-	void CreateTornadoActor(FGameplayAbilityTargetDataHandle DataHandle);
+	void CreateTornadoActor(FGameplayTag EventTag, FGameplayAbilityTargetDataHandle DataHandle);
 
 	TSubclassOf<AActor> TornadoProjectileActorClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float DistanceAwayFromAvatarToSpawnTornado = 50.0f;
 
+	UFUNCTION(BlueprintCallable)
+	void CreateTurnRateTask(FGameplayAbilityTargetDataHandle DataHandle);
+
+	void EventReceived(FGameplayTag EventTag, FGameplayEventData EventData);
+
+	void OnCancelled(FGameplayTag EventTag, FGameplayEventData EventData);
+
+	void EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
+		const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled) override;
+
+	UDTPAT_TurnRate* TurnRateTask;
 };
+

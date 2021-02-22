@@ -47,4 +47,14 @@ public:
 	void ExternalCancel() override;
 
 	void OnGameplayEvent(FGameplayTag EventTag, const FGameplayEventData* Payload);
+
+	void OnAbilityCancelled();
+
+	FDTPTurnRateEventDelegate OnCancelled;
+
+	FDelegateHandle EventHandle;
+
+	FDelegateHandle CancelledHandle;
+
+	void OnDestroy(bool bInOwnerFinished) override;
 };
