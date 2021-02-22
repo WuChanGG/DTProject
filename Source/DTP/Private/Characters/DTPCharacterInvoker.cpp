@@ -16,11 +16,6 @@ ADTPCharacterInvoker::ADTPCharacterInvoker()
 void ADTPCharacterInvoker::BeginPlay()
 {
 	Super::BeginPlay();
-	if (true)
-	{
-		return;
-	}
-		
 }
 
 void ADTPCharacterInvoker::OnRep_PlayerState()
@@ -70,6 +65,15 @@ void ADTPCharacterInvoker::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	
 	PlayerInputComponent->BindAction(InputQuaxActionName, EInputEvent::IE_Released, this,
 		&ADTPCharacterInvoker::InputReagent<InvokerReagents::Quax>);
+	
+	PlayerInputComponent->BindAction(InputInvokeActionName, EInputEvent::IE_Released, this,
+		&ADTPCharacterInvoker::InputInvoke);
+	
+	PlayerInputComponent->BindAction(InputFirstSlotAbilityActionName, EInputEvent::IE_Released, this,
+		&ADTPCharacterInvoker::InputFirstSlotAbility);
+	
+	PlayerInputComponent->BindAction(InputSecondSlotAbilityActionName, EInputEvent::IE_Released, this,
+		&ADTPCharacterInvoker::InputSecondSlotAbility);
 }
 
 void ADTPCharacterInvoker::GiveAbilityListToCharacter_Implementation()
@@ -241,6 +245,38 @@ void ADTPCharacterInvoker::RemoveDroppedThirdReagentEffects(FActiveReagentEffect
 	{
 		ASC->RemoveActiveGameplayEffect(SingleHandle, 1);
 	}
+}
+
+void ADTPCharacterInvoker::InputInvoke()
+{
+	check(GA_Invoke);
+	check(ASC);
+	if (!GA_Invoke || ASC == nullptr)
+	{
+		return;
+	}
+
+	ASC->TryActivateAbilityByClass(GA_Invoke);
+}
+
+void ADTPCharacterInvoker::InputFirstSlotAbility()
+{
+	if (FirstSlotAbility == nullptr || ASC == nullptr)
+	{
+		return;
+	}
+
+	ASC->TryActivateAbilityByClass(FirstSlotAbility);
+}
+
+void ADTPCharacterInvoker::InputSecondSlotAbility()
+{
+	if (SecondSlotAbility == nullptr || ASC == nullptr)
+	{
+		return;
+	}
+
+	ASC->TryActivateAbilityByClass(SecondSlotAbility);
 }
 
 void ADTPCharacterInvoker::ReagentChangedToQuax()

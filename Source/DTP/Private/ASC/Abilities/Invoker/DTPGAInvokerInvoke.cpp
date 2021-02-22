@@ -92,6 +92,14 @@ void UDTPGAInvokerInvoke::Invoke()
 		InvokerCharacter->SecondSlotAbility = TempFirstSlotAbility;
 
 		// TODO(Wuhie): UMG reactions to switching abilities
+		if (InvokerCharacter->FirstSlotAbility != nullptr)
+		{
+			InvokerCharacter->FirstSlotChangedDelegate.Broadcast(InvokerCharacter->FirstSlotAbility->GetName());
+		}
+		if (InvokerCharacter->SecondSlotAbility != nullptr)
+		{
+			InvokerCharacter->SecondSlotChangedDelegate.Broadcast(InvokerCharacter->SecondSlotAbility->GetName());
+		}
 		
 		EndAbility(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(),
 			true, true);
@@ -119,10 +127,21 @@ void UDTPGAInvokerInvoke::Invoke()
 
 		// TODO(Wuhie): UMG Reactions to FirstSlot and SecondSlot changes, namely change the icon of the available
 		// ability
+		if (InvokerCharacter->FirstSlotAbility != nullptr)
+		{
+			InvokerCharacter->FirstSlotChangedDelegate.Broadcast(InvokerCharacter->FirstSlotAbility->GetName());
+		}
+		if (InvokerCharacter->SecondSlotAbility != nullptr)
+		{
+			InvokerCharacter->SecondSlotChangedDelegate.Broadcast(InvokerCharacter->SecondSlotAbility->GetName());
+		}
 
 		// Grant the ability that was invoked by the reagents
-		GetAbilitySystemComponentFromActorInfo()->GiveAbility(FGameplayAbilitySpec(AbilityToGrant));
-
+		if (GetAvatarActorFromActorInfo()->GetLocalRole() == ROLE_Authority)
+		{
+			GetAbilitySystemComponentFromActorInfo()->GiveAbility(FGameplayAbilitySpec(AbilityToGrant));
+		}
+		
 		EndAbility(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(),
 			true, false);
 	}

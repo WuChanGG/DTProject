@@ -76,6 +76,7 @@ public:
 	void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
 		const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<FName, TSubclassOf<UGameplayAbility>> AbilityNameAndAbilityClassMap;
 
 	TArray<InvokerReagents> TransformReagentAttributesToEnumArray();

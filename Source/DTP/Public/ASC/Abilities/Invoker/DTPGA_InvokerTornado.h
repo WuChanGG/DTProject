@@ -19,8 +19,10 @@ public:
 	void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
 		const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
+	UFUNCTION()
 	void CreateTornadoActor(FGameplayTag EventTag, FGameplayAbilityTargetDataHandle DataHandle);
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AActor> TornadoProjectileActorClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -29,8 +31,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void CreateTurnRateTask(FGameplayAbilityTargetDataHandle DataHandle);
 
+	UFUNCTION()
 	void EventReceived(FGameplayTag EventTag, FGameplayEventData EventData);
 
+	UFUNCTION()
 	void OnCancelled(FGameplayTag EventTag, FGameplayEventData EventData);
 
 	void EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,

@@ -48933,6 +48933,7 @@
                 <e p="DTPAttributeSetInvoker.cpp" t="Include" />
               </e>
               <e p="DTPAT_TurnRate.cpp" t="Include" />
+              <e p="DTPTA_LineTrace.cpp" t="Include" />
             </e>
             <e p="Characters" t="Include">
               <e p="DTPCharacterInvoker.cpp" t="Include" />
@@ -48953,6 +48954,7 @@
                 <e p="DTPAttributeSetInvoker.h" t="Include" />
               </e>
               <e p="DTPAT_TurnRate.h" t="Include" />
+              <e p="DTPTA_LineTrace.h" t="Include" />
             </e>
             <e p="Characters" t="Include">
               <e p="DTPCharacterInvoker.h" t="Include" />

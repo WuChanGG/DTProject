@@ -14,6 +14,8 @@
 /**
  * 
  */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFirstSlotAbilityChangedDelegate, FString, SlotClassName);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSecondSlotAbilityChangedDelegate, FString, SlotClassName);
 
 USTRUCT(BlueprintType)
 struct FActiveReagentEffectInfo
@@ -70,6 +72,9 @@ public:
 	FName InputQuaxActionName = FName("InputQuax");
 	FName InputWexActionName = FName("InputWex");
 	FName InputExortActionName = FName("InputExort");
+	FName InputInvokeActionName = FName("InputInvoke");
+	FName InputFirstSlotAbilityActionName = FName("InputFirstSlotAbility");
+	FName InputSecondSlotAbilityActionName = FName("InputSecondSlotAbility");
 
 	template<InvokerReagents Reagent>
 	void InputReagent();
@@ -133,4 +138,19 @@ public:
 	// And the SecondSlotAbility is already the ability which Invoke invoked
 	// When the previous case happens, FirstSlotAbility and SecondSlotAbility only basically trade places
 	TSubclassOf<UGameplayAbility> SecondSlotAbility;
+
+	void InputInvoke();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayAbility> GA_Invoke;
+
+	void InputFirstSlotAbility();
+
+	void InputSecondSlotAbility();
+
+	UPROPERTY(BlueprintAssignable, BlueprintReadWrite)
+	FFirstSlotAbilityChangedDelegate FirstSlotChangedDelegate;
+	
+	UPROPERTY(BlueprintAssignable, BlueprintReadWrite)
+	FSecondSlotAbilityChangedDelegate SecondSlotChangedDelegate;
 };

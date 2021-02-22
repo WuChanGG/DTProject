@@ -11,6 +11,7 @@
 UDTPAT_TurnRate::UDTPAT_TurnRate()
 {
 	bStopWhenAbilityEnds = true;
+	bTickingTask = true;
 }
 
 void UDTPAT_TurnRate::TickTask(float DeltaTime)
@@ -30,24 +31,82 @@ void UDTPAT_TurnRate::TickTask(float DeltaTime)
 
 	// Get turn rate
 	float TurnRateAttribute = Ability->GetAbilitySystemComponentFromActorInfo()->GetNumericAttribute(
-		UDTPAttributeSetInvoker::GetTurnRateAttribute());
+        UDTPAttributeSetInvoker::GetTurnRateAttribute());
 
 	float TurnRateInSeconds = 1.0f / TurnRateAttribute;
-	
-	FRotator NewAvatarRotation = FMath::RInterpTo(Ability->GetAvatarActorFromActorInfo()->GetActorRotation(),
-		TargetRotation, DeltaTime, TurnRateInSeconds);
+	float ConstantTurnRate = TurnRateInSeconds * 60.0f;
 
-	Ability->GetAvatarActorFromActorInfo()->SetActorRotation(NewAvatarRotation);
+	// Calculate time to do a 180 degree turn
+	float SecondsToPerformHalfCircleTurn = (0.03f * 3.1416) / TurnRateAttribute;
+	// How many degrees are we turning
+	float AvatarYaw = Ability->GetAvatarActorFromActorInfo()->GetActorRotation().Yaw;
+	float TargetYaw = TargetRotation.Yaw;
+	float TurningDegrees = 0.0f;
+	
+
+	// FIXED
+	// Get degrees between the target rotations
+	FVector yy = NormalizedDirectionToRotateTo;
+	FVector xx = UKismetMathLibrary::Conv_RotatorToVector(
+		Ability->GetAvatarActorFromActorInfo()->GetActorRotation()).GetSafeNormal();
+	// xx.X = 0.0f;
+	// xx.Y = 0.0f;
+	// yy.X = 0.0f;
+	// yy.Y = 0.0f;
+	// FVector AvatarRV = FVector(0.0f, 0.0f, AvatarYaw);
+	// FVector TargetRV = FVector(0.0f, 0.0f, TargetYaw);
+	// float Result = FVector::DotProduct(AvatarRV, TargetRV);
+	// Result = Result / (AvatarRV.Size() * TargetRV.Size());
+	// Result = FMath::Acos(Result);
+	float Result = FVector::DotProduct(xx, yy);
+	Result = Result / (xx.Size() * yy.Size());
+	Result = FMath::Acos(Result);
+
+	// FIXED
+	
+	if (FMath::Abs(AvatarYaw) > FMath::Abs(TargetYaw))
+	{
+		TurningDegrees = FMath::Abs(AvatarYaw) - FMath::Abs(TargetYaw);
+	}
+	else if (FMath::Abs(AvatarYaw) < FMath::Abs(TargetYaw))
+	{
+		TurningDegrees = FMath::Abs(TargetYaw) - FMath::Abs(AvatarYaw);
+	}
+
+	// Three way rule
+	//float TimeToPerformTurningDegreesTurn = (TurningDegrees * SecondsToPerformHalfCircleTurn) / 3.1416f;
+	float TimeToPerformTurningDegreesTurn = (0.03f * Result) / TurnRateAttribute;
+	//float TimeToPerformTurningDegreesTurn = (0.03f * (TurningDegrees * (3.1416f / 180.0f)))  / TurnRateAttribute;
+
+	// Transform time to units per second
+
+	// 0.5 seconds with 1 unit is 2 seconds
+	// 0.14 seconds to do 180 units. 0.14 x 60 X 180
+	
+	FRotator NewAvatarRotation = FMath::RInterpConstantTo(Ability->GetAvatarActorFromActorInfo()->GetActorRotation(),
+		TargetRotation, DeltaTime, ((Result * 180.0f) / 3.1416f) / TimeToPerformTurningDegreesTurn );
+	FRotator NewAvatarRotationTest = FMath::RInterpTo(Ability->GetAvatarActorFromActorInfo()->GetActorRotation(),
+		TargetRotation, DeltaTime, TimeToPerformTurningDegreesTurn * TurningDegrees);
+	NewAvatarRotation.Pitch = 0.0f;
+	NewAvatarRotation.Roll = 0.0f;
+	NewAvatarRotationTest.Pitch = 0.0f;
+	NewAvatarRotationTest.Roll = 0.0f;
+
+	FRotator AvatarRotation = Ability->GetAvatarActorFromActorInfo()->GetActorRotation();
+
+    Ability->GetAvatarActorFromActorInfo()->SetActorRotation(NewAvatarRotation);
+	// APawn* AvatarPawn = Cast<APawn>(Ability->GetAvatarActorFromActorInfo());
+	// AvatarPawn->AddControllerYawInput(NewAvatarRotation.Yaw);
 
 	// Get the dot product of the normalized vectors
-	FVector AvatarLocationNormalized = Ability->GetAvatarActorFromActorInfo()->GetActorLocation().GetSafeNormal();
-	FVector TargetDataLocationNormalized = DataHitResultLocation.GetSafeNormal();
-	float DotProduct = FVector::DotProduct(AvatarLocationNormalized, TargetDataLocationNormalized);
+	FVector RotationOfAvatarAsVector = UKismetMathLibrary::Conv_RotatorToVector(Ability->GetAvatarActorFromActorInfo()->GetActorRotation()).GetSafeNormal();
+	float DotProduct = FVector::DotProduct(RotationOfAvatarAsVector, NormalizedDirectionToRotateTo);
+	
 
 	// If we are looking at the hit result location, broadcast OnCompleted
 	// In the case of the Invoker Tornado ability, when we are looking toward the hit result location, we spawn the
 	// tornado
-	if (FMath::IsNearlyEqual(DotProduct, 1.0f, 0.1f) && ShouldBroadcastAbilityTaskDelegates())
+	if (FMath::IsNearlyEqual(DotProduct, 1.0f, 0.2f) && ShouldBroadcastAbilityTaskDelegates())
 	{
 		OnCompleted.Broadcast(FGameplayTag(), DataHandle);
 		EndTask();

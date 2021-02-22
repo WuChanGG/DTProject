@@ -9,6 +9,7 @@ void UDTPGA_InvokerTornado::ActivateAbility(const FGameplayAbilitySpecHandle Han
                                             const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
                                             const FGameplayEventData* TriggerEventData)
 {
+	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 }
 
 void UDTPGA_InvokerTornado::CreateTornadoActor(FGameplayTag EventTag, FGameplayAbilityTargetDataHandle DataHandle)
@@ -66,6 +67,8 @@ void UDTPGA_InvokerTornado::CreateTurnRateTask(FGameplayAbilityTargetDataHandle 
 	TurnRateTask->OnCompleted.AddDynamic(this, &UDTPGA_InvokerTornado::CreateTornadoActor);
 	TurnRateTask->EventReceived.AddDynamic(this, &UDTPGA_InvokerTornado::EventReceived);
 	TurnRateTask->OnCancelled.AddDynamic(this, &UDTPGA_InvokerTornado::OnCancelled);
+
+	TurnRateTask->ReadyForActivation();
 }
 
 void UDTPGA_InvokerTornado::EventReceived(FGameplayTag EventTag, FGameplayEventData EventData)

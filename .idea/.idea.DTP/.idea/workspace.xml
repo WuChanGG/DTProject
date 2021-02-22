@@ -9,11 +9,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55468941-d77d-4f2f-b48e-f8252c69fc20" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DTP/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DTP/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DTP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DTP/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGameplayTags.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGameplayTags.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/BP_CharacterInvoker.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/BP_CharacterInvoker.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/Effects/GE_InitiateInvokerAttributes.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/DTP/Characters/Invoker/Effects/GE_InitiateInvokerAttributes.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/TopDownCPP/Maps/TopDownExampleMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TopDownCPP/Maps/TopDownExampleMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/DTP/Private/ASC/Abilities/Invoker/DTPGAInvokerInvoke.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Private/ASC/Abilities/Invoker/DTPGAInvokerInvoke.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/DTP/Private/ASC/Abilities/Invoker/DTPGA_InvokerTornado.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Private/ASC/Abilities/Invoker/DTPGA_InvokerTornado.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/DTP/Private/ASC/DTPAT_TurnRate.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Private/ASC/DTPAT_TurnRate.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/DTP/Private/Characters/DTPCharacterInvoker.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Private/Characters/DTPCharacterInvoker.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/DTP/Public/ASC/Abilities/Invoker/DTPGAInvokerInvoke.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Public/ASC/Abilities/Invoker/DTPGAInvokerInvoke.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/DTP/Public/ASC/Abilities/Invoker/DTPGA_InvokerTornado.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Public/ASC/Abilities/Invoker/DTPGA_InvokerTornado.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/DTP/Public/ASC/DTPAT_TurnRate.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Public/ASC/DTPAT_TurnRate.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/DTP/Public/Characters/DTPCharacterInvoker.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/DTP/Public/Characters/DTPCharacterInvoker.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +34,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://L:/WuApps/UE426/UE_4.26/Engine/Source/Runtime/GameplayTags/Private/GameplayTagsManager.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -35,16 +46,18 @@
       <option value="$PROJECT_DIR$/Source/DTP/GameMode/DTPPlayerState.h" />
       <option value="$PROJECT_DIR$/Source/DTP/GameMode/DTPPlayerState.cpp" />
       <option value="$PROJECT_DIR$/Source/DTP/Private/ASC/Abilities/DTPGAInputReagent.cpp" />
-      <option value="$PROJECT_DIR$/Source/DTP/Private/Characters/DTPCharacterInvoker.cpp" />
-      <option value="$PROJECT_DIR$/Source/DTP/Public/Characters/DTPCharacterInvoker.h" />
-      <option value="$PROJECT_DIR$/Source/DTP/Private/ASC/Abilities/Invoker/DTPGAInvokerInvoke.cpp" />
-      <option value="$PROJECT_DIR$/Source/DTP/Public/ASC/Abilities/Invoker/DTPGAInvokerInvoke.h" />
       <option value="$PROJECT_DIR$/Source/DTP/Public/ASC/AttributeSets/DTPAttributeSetInvoker.h" />
       <option value="$PROJECT_DIR$/Source/DTP/Private/ASC/AttributeSets/DTPAttributeSetInvoker.cpp" />
       <option value="$PROJECT_DIR$/Source/DTP/Public/ASC/DTPAT_TurnRate.h" />
-      <option value="$PROJECT_DIR$/Source/DTP/Private/ASC/DTPAT_TurnRate.cpp" />
+      <option value="$PROJECT_DIR$/Source/DTP/Public/ASC/DTPTA_LineTrace.h" />
+      <option value="$PROJECT_DIR$/Source/DTP/Private/ASC/DTPTA_LineTrace.cpp" />
+      <option value="$PROJECT_DIR$/Source/DTP/Public/ASC/Abilities/Invoker/DTPGAInvokerInvoke.h" />
+      <option value="$PROJECT_DIR$/Source/DTP/Private/Characters/DTPCharacterInvoker.cpp" />
+      <option value="$PROJECT_DIR$/Source/DTP/Public/Characters/DTPCharacterInvoker.h" />
+      <option value="$PROJECT_DIR$/Source/DTP/Private/ASC/Abilities/Invoker/DTPGAInvokerInvoke.cpp" />
       <option value="$PROJECT_DIR$/Source/DTP/Public/ASC/Abilities/Invoker/DTPGA_InvokerTornado.h" />
       <option value="$PROJECT_DIR$/Source/DTP/Private/ASC/Abilities/Invoker/DTPGA_InvokerTornado.cpp" />
+      <option value="$PROJECT_DIR$/Source/DTP/Private/ASC/DTPAT_TurnRate.cpp" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1oJgqJgQ0cVwnkicCo4qZ8aB8ny" />
@@ -66,7 +79,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.toDoOptions" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="ReaderModeSettings">
@@ -314,7 +327,9 @@
       <workItem from="1613840255058" duration="1341000" />
       <workItem from="1613844395141" duration="115000" />
       <workItem from="1613844611492" duration="17842000" />
-      <workItem from="1613934376192" duration="13918000" />
+      <workItem from="1613934376192" duration="29419000" />
+      <workItem from="1613976180732" duration="1425000" />
+      <workItem from="1614011134977" duration="17157000" />
     </task>
     <servers />
   </component>
