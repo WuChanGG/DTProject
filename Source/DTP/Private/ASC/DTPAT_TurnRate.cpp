@@ -6,7 +6,9 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "ASC/AttributeSets/DTPAttributeSetInvoker.h"
+#include "Characters/DTPCharacterInvoker.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 UDTPAT_TurnRate::UDTPAT_TurnRate()
 {
@@ -100,13 +102,47 @@ void UDTPAT_TurnRate::TickTask(float DeltaTime)
 
 	// Get the dot product of the normalized vectors
 	FVector RotationOfAvatarAsVector = UKismetMathLibrary::Conv_RotatorToVector(Ability->GetAvatarActorFromActorInfo()->GetActorRotation()).GetSafeNormal();
+	// RotationOfAvatarAsVector.X = 0.0f;
+	// RotationOfAvatarAsVector.Y = 0.0f;
+	// NormalizedDirectionToRotateTo.X = 0.0f;
+	// NormalizedDirectionToRotateTo.Y = 0.0f;
 	float DotProduct = FVector::DotProduct(RotationOfAvatarAsVector, NormalizedDirectionToRotateTo);
-	
 
+	// FIXED
+	FVector RotationOfAvatarActorAsVector = UKismetMathLibrary::Conv_RotatorToVector(Ability->GetAvatarActorFromActorInfo()->GetActorRotation());
+	RotationOfAvatarActorAsVector.Z = 0.0f;
+	FVector DirectionToRotateToAsVector = DirectionToRotateTo;
+	DirectionToRotateToAsVector.Z = 0.0f;
+	float NewDotProduct = FVector::DotProduct(RotationOfAvatarActorAsVector.GetSafeNormal(),
+		DirectionToRotateToAsVector.GetSafeNormal());
+	
+	bool NearlyEqualOnServer = false;
+	bool NearlyEqualOnClient = false;
+	if (Ability->GetOwningActorFromActorInfo()->GetLocalRole() == ROLE_Authority)
+	{
+		ADTPCharacterInvoker* InvokerCharacter = Cast<ADTPCharacterInvoker>(Ability->GetAvatarActorFromActorInfo());
+		if (InvokerCharacter != nullptr)
+		{
+			InvokerCharacter->bIsTurnRotationAlmostEqualOnServer = FMath::IsNearlyEqual(NewDotProduct, 1.0f, TurnRateErrorTolerance) && ShouldBroadcastAbilityTaskDelegates();
+			NearlyEqualOnServer = InvokerCharacter->bIsTurnRotationAlmostEqualOnServer;
+			NearlyEqualOnClient = InvokerCharacter->bIsTurnRotationAlmostEqualOnClient;
+		}
+	}
+	if (Ability->GetOwningActorFromActorInfo()->GetLocalRole() != ROLE_Authority)
+	{
+		ADTPCharacterInvoker* InvokerCharacter = Cast<ADTPCharacterInvoker>(Ability->GetAvatarActorFromActorInfo());
+		if (InvokerCharacter != nullptr)
+		{
+			NearlyEqualOnServer = InvokerCharacter->bIsTurnRotationAlmostEqualOnServer;
+			NearlyEqualOnClient = FMath::IsNearlyEqual(NewDotProduct, 1.0f, TurnRateErrorTolerance) && ShouldBroadcastAbilityTaskDelegates();
+			InvokerCharacter->SetTurnRateBoolOnServer(NearlyEqualOnClient);
+		}
+		
+	}
 	// If we are looking at the hit result location, broadcast OnCompleted
 	// In the case of the Invoker Tornado ability, when we are looking toward the hit result location, we spawn the
 	// tornado
-	if (FMath::IsNearlyEqual(DotProduct, 1.0f, 0.2f) && ShouldBroadcastAbilityTaskDelegates())
+	if (NearlyEqualOnClient && NearlyEqualOnServer)
 	{
 		OnCompleted.Broadcast(FGameplayTag(), DataHandle);
 		EndTask();
@@ -197,6 +233,17 @@ void UDTPAT_TurnRate::OnDestroy(bool bInOwnerFinished)
 			EventHandle);
 	}
 
+	if (Ability->GetOwningActorFromActorInfo()->GetLocalRole() == ROLE_Authority)
+	{
+		UKismetSystemLibrary::PrintString(this, FString("Task ended on server"));
+		UKismetSystemLibrary::PrintString(this, FString("Server rotation: ") + Ability->GetAvatarActorFromActorInfo()->GetActorRotation().ToString());
+	}
+	else
+	{
+		UKismetSystemLibrary::PrintString(this, FString("Task ended on client"));
+		UKismetSystemLibrary::PrintString(this, FString("Client rotation: ") + Ability->GetAvatarActorFromActorInfo()->GetActorRotation().ToString());
+	}
+		
 	Super::OnDestroy(bInOwnerFinished);
 
 	EndTask();

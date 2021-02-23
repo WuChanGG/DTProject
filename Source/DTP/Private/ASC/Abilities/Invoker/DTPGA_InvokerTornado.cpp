@@ -90,6 +90,10 @@ void UDTPGA_InvokerTornado::EndAbility(const FGameplayAbilitySpecHandle Handle,
 	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
 	bool bReplicateEndAbility, bool bWasCancelled)
 {
-	TurnRateTask->EndTask();
+	if (TurnRateTask != nullptr && !TurnRateTask->IsPendingKill())
+	{
+		TurnRateTask->EndTask();
+	}
+	
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }

@@ -153,4 +153,14 @@ public:
 	
 	UPROPERTY(BlueprintAssignable, BlueprintReadWrite)
 	FSecondSlotAbilityChangedDelegate SecondSlotChangedDelegate;
+
+	UPROPERTY(Replicated)
+	bool bIsTurnRotationAlmostEqualOnServer = false;
+
+	bool bIsTurnRotationAlmostEqualOnClient = false;
+
+	UFUNCTION(Server, Reliable)
+	void SetTurnRateBoolOnServer(bool InBool);
+	
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

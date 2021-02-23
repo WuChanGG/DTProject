@@ -57,4 +57,6 @@ public:
 	FDelegateHandle CancelledHandle;
 
 	void OnDestroy(bool bInOwnerFinished) override;
+
+	float TurnRateErrorTolerance = 0.001f;
 };

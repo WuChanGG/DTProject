@@ -7,6 +7,7 @@
 #include "ASC/Abilities/DTPGAInputReagent.h"
 #include "Serialization/StructuredArchiveFormatter.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Net/UnrealNetwork.h"
 
 ADTPCharacterInvoker::ADTPCharacterInvoker()
 {
@@ -277,6 +278,18 @@ void ADTPCharacterInvoker::InputSecondSlotAbility()
 	}
 
 	ASC->TryActivateAbilityByClass(SecondSlotAbility);
+}
+
+void ADTPCharacterInvoker::SetTurnRateBoolOnServer_Implementation(bool InBool)
+{
+	bIsTurnRotationAlmostEqualOnClient = InBool;
+}
+
+void ADTPCharacterInvoker::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ADTPCharacterInvoker, bIsTurnRotationAlmostEqualOnServer);
 }
 
 void ADTPCharacterInvoker::ReagentChangedToQuax()
