@@ -75,6 +75,9 @@ void ADTPCharacterInvoker::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	
 	PlayerInputComponent->BindAction(InputSecondSlotAbilityActionName, EInputEvent::IE_Released, this,
 		&ADTPCharacterInvoker::InputSecondSlotAbility);
+	
+	PlayerInputComponent->BindAction(FName("InputDebugMember"), EInputEvent::IE_Released, this,
+		&ADTPCharacterInvoker::DebugMember);
 }
 
 void ADTPCharacterInvoker::GiveAbilityListToCharacter_Implementation()
@@ -233,6 +236,24 @@ void ADTPCharacterInvoker::DebugMember()
 	// FGameplayEffectSpecHandle Spec = ASC->MakeOutgoingSpec(GE_QuaxHealthRegen, 1.0,
 	// 	ASC->MakeEffectContext());
 	// QuaxRegenHandle = ASC->ApplyGameplayEffectSpecToSelf(*Spec.Data.Get());
+	DebugMemberClient();
+	DebugMemberServer();
+}
+
+void ADTPCharacterInvoker::DebugMemberClient_Implementation()
+{
+	UKismetSystemLibrary::PrintString(this, FString("Near Client: ") + FString::FromInt(bIsTurnRotationAlmostEqualOnClient));
+	UKismetSystemLibrary::PrintString(this, FString("Near Server: ") + FString::FromInt(bIsTurnRotationAlmostEqualOnServer));
+	UKismetSystemLibrary::PrintString(this, FString("Finished Client: ") + FString::FromInt(bDidTurnRateTaskEndOnClient));
+	UKismetSystemLibrary::PrintString(this, FString("Finished Server: ") + FString::FromInt(bDidTurnRateTaskEndOnServer));
+}
+
+void ADTPCharacterInvoker::DebugMemberServer_Implementation()
+{
+	UKismetSystemLibrary::PrintString(this, FString("Near Client: ") + FString::FromInt(bIsTurnRotationAlmostEqualOnClient));
+	UKismetSystemLibrary::PrintString(this, FString("Near Server: ") + FString::FromInt(bIsTurnRotationAlmostEqualOnServer));
+	UKismetSystemLibrary::PrintString(this, FString("Finished Client: ") + FString::FromInt(bDidTurnRateTaskEndOnClient));
+	UKismetSystemLibrary::PrintString(this, FString("Finished Server: ") + FString::FromInt(bDidTurnRateTaskEndOnServer));
 }
 
 void ADTPCharacterInvoker::RemoveDroppedThirdReagentEffects(FActiveReagentEffectInfo DroppedReagentInfo)
@@ -280,16 +301,35 @@ void ADTPCharacterInvoker::InputSecondSlotAbility()
 	ASC->TryActivateAbilityByClass(SecondSlotAbility);
 }
 
-void ADTPCharacterInvoker::SetTurnRateBoolOnServer_Implementation(bool InBool)
-{
-	bIsTurnRotationAlmostEqualOnClient = InBool;
-}
 
 void ADTPCharacterInvoker::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(ADTPCharacterInvoker, bIsTurnRotationAlmostEqualOnServer);
+	// DOREPLIFETIME(ADTPCharacterInvoker, bIsTurnRotationAlmostEqualOnClient);
+	// DOREPLIFETIME(ADTPCharacterInvoker, bIsTurnRotationAlmostEqualOnServer);
+	DOREPLIFETIME(ADTPCharacterInvoker, bDidTurnRateTaskEndOnClient);
+	DOREPLIFETIME(ADTPCharacterInvoker, bDidTurnRateTaskEndOnServer);
+}
+
+void ADTPCharacterInvoker::SetDidTurnRateTaskEndOnClient_Implementation(bool InBool)
+{
+	bDidTurnRateTaskEndOnClient = InBool;
+}
+
+void ADTPCharacterInvoker::SetDidTurnRateTaskEndOnServer_Implementation(bool InBool)
+{
+	bDidTurnRateTaskEndOnServer = InBool;
+}
+
+void ADTPCharacterInvoker::SetTurnRotationEqualServerOnClient_Implementation(bool InBool)
+{
+	bIsTurnRotationAlmostEqualOnServer = InBool;
+}
+
+void ADTPCharacterInvoker::SetTurnRotationEqualClientOnServer_Implementation(bool InBool)
+{
+	bIsTurnRotationAlmostEqualOnClient = InBool;
 }
 
 void ADTPCharacterInvoker::ReagentChangedToQuax()

@@ -112,6 +112,12 @@ public:
 
 	void DebugMember();
 
+	UFUNCTION(Client, Reliable)
+	void DebugMemberClient();
+
+	UFUNCTION(Server, Reliable)
+	void DebugMemberServer();
+
 	FActiveGameplayEffectHandle QuaxRegenHandle;
 
 	bool bDebugBool = false;
@@ -154,13 +160,36 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintReadWrite)
 	FSecondSlotAbilityChangedDelegate SecondSlotChangedDelegate;
 
-	UPROPERTY(Replicated)
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	
+	// UPROPERTY(Replicated)
 	bool bIsTurnRotationAlmostEqualOnServer = false;
 
+	// UPROPERTY(Replicated)
 	bool bIsTurnRotationAlmostEqualOnClient = false;
 
 	UFUNCTION(Server, Reliable)
-	void SetTurnRateBoolOnServer(bool InBool);
+	void SetTurnRotationEqualClientOnServer(bool InBool);
 	
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	UFUNCTION(Client, Reliable)
+	void SetTurnRotationEqualServerOnClient(bool InBool);
+	
+	UPROPERTY(Replicated)
+	bool bDidTurnRateTaskEndOnServer;
+	
+	UPROPERTY(Replicated)
+	bool bDidTurnRateTaskEndOnClient;
+
+	UFUNCTION(Server, Reliable)
+	void SetDidTurnRateTaskEndOnServer(bool InBool);
+
+	UFUNCTION(Server, Reliable)
+	void SetDidTurnRateTaskEndOnClient(bool InBool);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_TurnRateAlmostEqualOnServer;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UGameplayEffect> GE_TurnRateAlmostEqualOnClient;
+
 };
